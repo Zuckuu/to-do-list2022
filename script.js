@@ -1,6 +1,8 @@
 todoMain();
 
 function todoMain() {
+  const DEFAULT_OPTION = "Choose the category";
+
   let inputElem, inputElem2, button, selectElem;
 
   getElements();
@@ -57,8 +59,11 @@ function todoMain() {
     tdElem4.appendChild(spanElem);
     trElem.appendChild(tdElem4);
 
+    updateSelectOptions();
+
     function deleteItem() {
       trElem.remove();
+      updateSelectOptions();
     }
 
     function done() {
@@ -69,7 +74,7 @@ function todoMain() {
   function filterEntries() {
     let selection = selectElem.value;
 
-    if (selection == "") {
+    if (selection == DEFAULT_OPTION) {
       let rows = document.getElementsByTagName("tr");
 
       Array.from(rows).forEach((row, index) => {
@@ -91,6 +96,38 @@ function todoMain() {
           row.style.display = "none";
         }
       });
+    }
+  }
+
+  function updateSelectOptions() {
+    let options = [];
+
+    let rows = document.getElementsByTagName("tr");
+
+    Array.from(rows).forEach((row, index) => {
+      if (index == 0) {
+        return;
+      }
+
+      let category = row.getElementsByTagName("td")[2].innerText;
+
+      options.push(category);
+    });
+
+    let optionSet = new Set(options);
+
+    selectElem.innerHTML = "";
+
+    let newOptionElem = document.createElement("option");
+    newOptionElem.value = DEFAULT_OPTION;
+    newOptionElem.innerText = DEFAULT_OPTION;
+    selectElem.appendChild(newOptionElem);
+
+    for (let option of optionSet) {
+      let newOptionElem = document.createElement("option");
+      newOptionElem.value = option;
+      newOptionElem.innerText = option;
+      selectElem.appendChild(newOptionElem);
     }
   }
 }
