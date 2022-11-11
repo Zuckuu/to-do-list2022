@@ -1,26 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>To Do List</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="./script.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/f936f45ab8.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
     <nav class="navCon">
-        <figure>
-            <img src="./amethyst.png" class="navImg" alt="">
-        </figure>
-        <div>
-            <h1 class="navTitle">
-                To Do List
-            </h1>
-        </div>
-        <div>
-            <button class="btn">Login</button>
-        </div>
+      <div>
+        <h1 class="navTitle">To Do List</h1>
+      </div>
     </nav>
-
-</body>
+    <input type="text" placeholder="Enter New Assignments" />
+    <p>
+      <input type="text" placeholder="Enter Category" list="categoryList" />
+    </p>
+    <datalist id="categoryList">
+      <option value="Personal"></option>
+      <option value="Work"></option>
+      <option value="School"></option>
+    </datalist>
+    <button id="addBtn">Add</button>
+    <ul></ul>
+    <table id="todoTable">
+      <tr>
+        <td>Checkbox</td>
+        <td>Assignments</td>
+        <td>
+          <select id="categoryFilter">
+            <option value="Personal">Personal</option>
+            <option value="Work">Work</option>
+            <option value="School">School</option>
+          </select>
+        </td>
+        <td>Delete</td>
+      </tr>
+    </table>
+  </body>
 </html>
