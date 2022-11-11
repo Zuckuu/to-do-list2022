@@ -68,26 +68,17 @@ function todoMain() {
   function filterEntries() {
     let selection = selectElem.value;
 
+    let trElems = document.getElementsByTagName("tr");
+    for (let i = trElems.length - 1; i > 0; i--) {
+      trElems[i].remove();
+    }
+
     if (selection == DEFAULT_OPTION) {
-      let rows = document.getElementsByTagName("tr");
-
-      Array.from(rows).forEach((row, index) => {
-        row.style.display = "";
-      });
+      todoList.forEach((obj) => renderRow(obj));
     } else {
-      let rows = document.getElementsByTagName("tr");
-
-      Array.from(rows).forEach((row, index) => {
-        if (index == 0) {
-          return;
-        }
-
-        let category = row.getElementsByTagName("td")[2].innerText;
-
-        if (category == selectElem.value) {
-          row.style.display = "";
-        } else {
-          row.style.display = "none";
+      todoList.forEach((obj) => {
+        if (obj.category == selection) {
+          renderRow(obj);
         }
       });
     }
@@ -96,16 +87,8 @@ function todoMain() {
   function updateSelectOptions() {
     let options = [];
 
-    let rows = document.getElementsByTagName("tr");
-
-    Array.from(rows).forEach((row, index) => {
-      if (index == 0) {
-        return;
-      }
-
-      let category = row.getElementsByTagName("td")[2].innerText;
-
-      options.push(category);
+    todoList.forEach((obj) => {
+      options.push(obj.category);
     });
 
     let optionSet = new Set(options);
@@ -190,6 +173,7 @@ function todoMain() {
     //Category cell
     let tdElem3 = document.createElement("td");
     tdElem3.innerText = inputValue2;
+    tdElem3.className = "categoryCell";
     trElem.appendChild(tdElem3);
 
     //Detele cell
@@ -258,19 +242,10 @@ function todoMain() {
     });
     save();
 
-    let table = document.getElementById("todoTable");
-    table.innerHTML = 
-    `
-      <tr>
-        <td>Check</td>
-        <td>Date</td>
-        <td>Time</td>
-        <td>Assignments</td>
-        <td>
-          <select id="categoryFilter"></select>
-        </td>
-        <td>Delete</td>
-      </tr>`;
+    let trElems = document.getElementsByTagName("tr");
+    for (let i = trElems.length - 1; i > 0; i--) {
+      trElems[i].remove();
+    }
 
     renderRows();
   }
