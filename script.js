@@ -7,7 +7,8 @@ function todoMain() {
     inputElem2,
     dateInput,
     timeInput,
-    button,
+    addButton,
+    sortButton,
     selectElem,
     todoList = [];
 
@@ -22,12 +23,14 @@ function todoMain() {
     inputElem2 = document.getElementsByTagName("input")[1];
     dateInput = document.getElementById("dateInput");
     timeInput = document.getElementById("timeInput");
-    button = document.getElementById("addBtn");
+    addButton = document.getElementById("addBtn");
+    sortButton = document.getElementById("sortBtn");
     selectElem = document.getElementById("categoryFilter");
   }
 
   function addListeners() {
-    button.addEventListener("click", addEntry, false);
+    addButton.addEventListener("click", addEntry, false);
+    sortButton.addEventListener("click", sortEntry, false);
     selectElem.addEventListener("change", filterEntries, false);
   }
 
@@ -166,10 +169,10 @@ function todoMain() {
     //Date cell
     let dateElem = document.createElement("td");
     let dateObj = new Date(date);
-    let formattedDate = dateObj.toLocaleString("en-US",{
-      month:"long",
+    let formattedDate = dateObj.toLocaleString("en-US", {
+      month: "long",
       day: "numeric",
-      year: "numeric"
+      year: "numeric",
     });
     dateElem.innerText = formattedDate;
     trElem.appendChild(dateElem);
@@ -245,5 +248,30 @@ function todoMain() {
         return (c === "x" ? r : (r & 0x3) | 0x8).toString(16);
       }
     );
+  }
+
+  function sortEntry() {
+    todoList.sort((a, b) => {
+      let aDate = Date.parse(a.date);
+      let bDate = Date.parse(b.date);
+      return aDate - bDate;
+    });
+    save();
+
+    let table = document.getElementById("todoTable");
+    table.innerHTML = 
+    `
+      <tr>
+        <td>Check</td>
+        <td>Date</td>
+        <td>Time</td>
+        <td>Assignments</td>
+        <td>
+          <select id="categoryFilter"></select>
+        </td>
+        <td>Delete</td>
+      </tr>`;
+
+    renderRows();
   }
 }
