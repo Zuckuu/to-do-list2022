@@ -5,6 +5,8 @@ function todoMain() {
 
   let inputElem,
     inputElem2,
+    dateInput,
+    timeInput,
     button,
     selectElem,
     todoList = [];
@@ -18,6 +20,8 @@ function todoMain() {
   function getElements() {
     inputElem = document.getElementsByTagName("input")[0];
     inputElem2 = document.getElementsByTagName("input")[1];
+    dateInput = document.getElementById("dateInput");
+    timeInput = document.getElementById("timeInput");
     button = document.getElementById("addBtn");
     selectElem = document.getElementById("categoryFilter");
   }
@@ -34,10 +38,18 @@ function todoMain() {
     let inputValue2 = inputElem2.value;
     inputElem2.value = "";
 
+    let dateValue = dateInput.value;
+    dateInput.value = "";
+
+    let timeValue = timeInput.value;
+    timeInput.value = "";
+
     let obj = {
       id: _uuid(),
       todo: inputValue,
       category: inputValue2,
+      date: dateValue,
+      time: timeValue,
       done: false,
     };
 
@@ -129,7 +141,14 @@ function todoMain() {
     });
   }
 
-  function renderRow({ todo: inputValue, category: inputValue2, id, done }) {
+  function renderRow({
+    todo: inputValue,
+    category: inputValue2,
+    id,
+    date,
+    time,
+    done,
+  }) {
     let table = document.getElementById("todoTable");
 
     let trElem = document.createElement("tr");
@@ -143,6 +162,22 @@ function todoMain() {
     let tdElem1 = document.createElement("td");
     tdElem1.appendChild(checkboxElem);
     trElem.appendChild(tdElem1);
+
+    //Date cell
+    let dateElem = document.createElement("td");
+    let dateObj = new Date(date);
+    let formattedDate = dateObj.toLocaleString("en-US",{
+      month:"long",
+      day: "numeric",
+      year: "numeric"
+    });
+    dateElem.innerText = formattedDate;
+    trElem.appendChild(dateElem);
+
+    //Time cell
+    let timeElem = document.createElement("td");
+    timeElem.innerText = time;
+    trElem.appendChild(timeElem);
 
     //Assignments cell
     let tdElem2 = document.createElement("td");
