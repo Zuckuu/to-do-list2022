@@ -13,6 +13,7 @@ function todoMain() {
   addListeners();
   load();
   renderRows();
+  updateSelectOptions();
 
   function getElements() {
     inputElem = document.getElementsByTagName("input")[0];
@@ -33,9 +34,11 @@ function todoMain() {
     let inputValue2 = inputElem2.value;
     inputElem2.value = "";
 
-    renderRow(inputValue, inputValue2);
+    let obj = { todo: inputValue, category: inputValue2 }
 
-    todoList.push(inputValue);
+    renderRow(obj);
+
+    todoList.push(obj);
 
     save();
 
@@ -109,19 +112,21 @@ function todoMain() {
 
   function load() {
     let retrieved = localStorage.getItem("todoList");
-    todoList = JSON.parse(retrieved)
+    todoList = JSON.parse(retrieved);
     if (todoList == null) {
       todoList = [];
     }
   }
 
   function renderRows() {
-    todoList.forEach((todo) => {
-      renderRow(todo, null);
+    todoList.forEach((todoObj) => {
+      renderRow(todoObj);
     });
   }
 
-  function renderRow(inputValue, inputValue2) {
+  function renderRow({ todo: inputValue, category: inputValue2 }) {
+   
+
     let table = document.getElementById("todoTable");
 
     let trElem = document.createElement("tr");
