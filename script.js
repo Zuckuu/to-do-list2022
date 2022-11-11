@@ -34,7 +34,12 @@ function todoMain() {
     let inputValue2 = inputElem2.value;
     inputElem2.value = "";
 
-    let obj = { todo: inputValue, category: inputValue2 }
+    let obj = {
+      id: todoList.length,
+      todo: inputValue,
+      category: inputValue2,
+      done: false,
+    };
 
     renderRow(obj);
 
@@ -124,9 +129,7 @@ function todoMain() {
     });
   }
 
-  function renderRow({ todo: inputValue, category: inputValue2 }) {
-   
-
+  function renderRow({ todo: inputValue, category: inputValue2, id, done }) {
     let table = document.getElementById("todoTable");
 
     let trElem = document.createElement("tr");
@@ -135,7 +138,8 @@ function todoMain() {
     //checkbox cell
     let checkboxElem = document.createElement("input");
     checkboxElem.type = "checkbox";
-    checkboxElem.addEventListener("click", done, false);
+    checkboxElem.addEventListener("click", checkboxClickCallback, false);
+    checkboxElem.dataset.id = id;
     let tdElem1 = document.createElement("td");
     tdElem1.appendChild(checkboxElem);
     trElem.appendChild(tdElem1);
@@ -155,17 +159,38 @@ function todoMain() {
     spanElem.innerText = "";
     spanElem.className = "fa-solid fa-trash-can";
     spanElem.addEventListener("click", deleteItem, false);
+    spanElem.dataset.id = id;
     let tdElem4 = document.createElement("td");
     tdElem4.appendChild(spanElem);
     trElem.appendChild(tdElem4);
 
+    checkboxElem.type = "checkbox";
+    checkboxElem.checked = done;
+    if (done) {
+      trElem.classList.add("strike");
+    } else {
+      trElem.classList.remove("strike");
+    }
+
     function deleteItem() {
       trElem.remove();
       updateSelectOptions();
+      for (let i = 0; i < todoList.length; i++) {
+        if (todoList[i].id == this.dataset.id) {
+          todoList.splice(i, 1);
+        }
+      }
+      save();
     }
 
-    function done() {
+    function checkboxClickCallback() {
       trElem.classList.toggle("strike");
+      for (let i = 0; i < todoList.length; i++) {
+        if (todoList[i].id == this.dataset.id) {
+          todoList[i]["done"] = this.checked;
+        }
+      }
+      save();
     }
   }
 }
