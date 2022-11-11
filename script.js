@@ -65,19 +65,32 @@ function todoMain() {
       trElem.classList.toggle("strike");
     }
   }
-  function filterEntries() {
-    let rows = document.getElementsByTagName("tr");
 
-    Array.from(rows).forEach((row, index) => {
-      if (index == 0) {
-        return;
-      }
-      let category = row.getElementsByTagName("td")[2].innerText;
-      if (category == selectElem.value) {
+  function filterEntries() {
+    let selection = selectElem.value;
+
+    if (selection == "") {
+      let rows = document.getElementsByTagName("tr");
+
+      Array.from(rows).forEach((row, index) => {
         row.style.display = "";
-      } else {
-        row.style.display = "none";
-      }
-    });
+      });
+    } else {
+      let rows = document.getElementsByTagName("tr");
+
+      Array.from(rows).forEach((row, index) => {
+        if (index == 0) {
+          return;
+        }
+
+        let category = row.getElementsByTagName("td")[2].innerText;
+
+        if (category == selectElem.value) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
   }
 }
