@@ -10,10 +10,12 @@ function todoMain() {
     addButton,
     sortButton,
     selectElem,
-    todoList = [];
+    todoList = [],
+    calendar;
 
   getElements();
   addListeners();
+  initCalendar();
   load();
   renderRows();
   updateSelectOptions();
@@ -28,12 +30,14 @@ function todoMain() {
     selectElem = document.getElementById("categoryFilter");
   }
 
+  //all my btn
   function addListeners() {
     addButton.addEventListener("click", addEntry, false);
     sortButton.addEventListener("click", sortEntry, false);
     selectElem.addEventListener("change", filterEntries, false);
   }
 
+  //adding to the todolist by pushing the obj
   function addEntry(event) {
     let inputValue = inputElem.value;
     inputElem.value = "";
@@ -65,6 +69,7 @@ function todoMain() {
     updateSelectOptions();
   }
 
+  //filtering the category so that it dont have dupls
   function filterEntries() {
     let selection = selectElem.value;
 
@@ -72,6 +77,9 @@ function todoMain() {
     for (let i = trElems.length - 1; i > 0; i--) {
       trElems[i].remove();
     }
+
+    //remove from calendar
+    calendar.getEvents().forEach((event) => event.remove());
 
     if (selection == DEFAULT_OPTION) {
       todoList.forEach((obj) => renderRow(obj));
@@ -84,6 +92,7 @@ function todoMain() {
     }
   }
 
+  //updating the category selections
   function updateSelectOptions() {
     let options = [];
 
@@ -194,6 +203,13 @@ function todoMain() {
       trElem.classList.remove("strike");
     }
 
+    addEvent({
+      id: id,
+      title: inputValue,
+      start: date,
+    });
+
+    //delete item from the list
     function deleteItem() {
       trElem.remove();
       updateSelectOptions();
@@ -203,6 +219,9 @@ function todoMain() {
         }
       }
       save();
+
+      //remove from calendar
+      calendar.getEventById(this.dataset.id).remove();
     }
 
     function checkboxClickCallback() {
@@ -216,6 +235,7 @@ function todoMain() {
     }
   }
 
+  //generate an id
   function _uuid() {
     var d = Date.now();
     if (
@@ -234,6 +254,7 @@ function todoMain() {
     );
   }
 
+  //sort by date
   function sortEntry() {
     todoList.sort((a, b) => {
       let aDate = Date.parse(a.date);
@@ -248,5 +269,27 @@ function todoMain() {
     }
 
     renderRows();
+  }
+
+  //adding the calendar
+  function initCalendar() {
+    var calendarEl = document.getElementById("calendar");
+
+    calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: "dayGridMonth",
+      headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay",
+      },
+      events: [],
+    });
+
+    calendar.render();
+  }
+
+  //adding things to the calendar
+  function addEvent(event) {
+    calendar.addEvent(event);
   }
 }

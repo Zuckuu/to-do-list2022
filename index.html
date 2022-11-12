@@ -11,6 +11,11 @@
       src="https://kit.fontawesome.com/f936f45ab8.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css"
+    />
   </head>
   <body>
     <nav class="navCon">
@@ -27,8 +32,8 @@
       <option value="Work"></option>
       <option value="School"></option>
     </datalist>
-    <p><input type="date" id="dateInput"></p>
-    <p><input type="time" id="timeInput"></p>
+    <p><input type="date" id="dateInput" /></p>
+    <p><input type="time" id="timeInput" /></p>
     <button id="addBtn">Add</button>
     <button id="sortBtn">Sort</button>
     <ul></ul>
@@ -44,5 +49,6 @@
         <td>Delete</td>
       </tr>
     </table>
+    <div id="calendar"></div>
   </body>
 </html>
