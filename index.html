@@ -23,32 +23,40 @@
         <h1 class="navTitle">To Do List</h1>
       </div>
     </nav>
-    <input type="text" placeholder="Enter New Assignments" />
-    <p>
-      <input type="text" placeholder="Enter Category" list="categoryList" />
-    </p>
-    <datalist id="categoryList">
-      <option value="Personal"></option>
-      <option value="Work"></option>
-      <option value="School"></option>
-    </datalist>
-    <p><input type="date" id="dateInput" /></p>
-    <p><input type="time" id="timeInput" /></p>
-    <button id="addBtn">Add</button>
-    <button id="sortBtn">Sort</button>
-    <ul></ul>
-    <table id="todoTable">
-      <tr>
-        <td>Check</td>
-        <td>Date</td>
-        <td>Time</td>
-        <td>Assignments</td>
-        <td>
-          <select id="categoryFilter"></select>
-        </td>
-        <td>Delete</td>
-      </tr>
-    </table>
-    <div id="calendar"></div>
+    <div class="main-con">
+      <div class="input-con">
+        <input type="text" placeholder="Enter New Assignments" />
+        <p>
+          <input type="text" placeholder="Enter Category" list="categoryList" />
+        </p>
+        <datalist id="categoryList">
+          <option value="Personal"></option>
+          <option value="Work"></option>
+          <option value="School"></option>
+        </datalist>
+        <p><input type="date" id="dateInput" /></p>
+        <p><input type="time" id="timeInput" /></p>
+        <div class="btn-con">
+          <button id="addBtn">Add</button>
+          <button id="sortBtn">Sort</button>
+        </div>
+
+        <ul></ul>
+        <table id="todoTable">
+          <tr>
+            <td></td>
+            <td>Date</td>
+            <td>Time</td>
+            <td>Assignments</td>
+            <td>
+              <select id="categoryFilter"></select>
+            </td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+
+      <div id="calendar"></div>
+    </div>
   </body>
 </html>
