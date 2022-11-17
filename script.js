@@ -1,5 +1,4 @@
 todoMain();
-//https://www.youtube.com/playlist?list=PLkqwj9vc20pUitqvZrLPk-hTNv63EJqwg
 
 function todoMain() {
   const DEFAULT_OPTION = "Choose category";
@@ -297,7 +296,7 @@ function todoMain() {
 
     calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth',
-      initialDate: new Date(), //'2020-07-07',
+      initialDate: new Date(),
       headerToolbar: {
         left: 'prev,next today',
         center: 'title',
